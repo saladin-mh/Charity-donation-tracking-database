@@ -1,2 +1,0 @@
-# Charity donation tracking database
- 
