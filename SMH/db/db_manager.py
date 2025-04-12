@@ -1,9 +1,11 @@
 # db/db_manager.py
 
 import sqlite3
+import os
 from contextlib import contextmanager
 
-DB_NAME = "smh.db"
+# Save the DB inside the /db/ folder
+DB_NAME = os.path.join(os.path.dirname(__file__), "smh.db")
 
 def initialize_database():
     """
@@ -28,4 +30,4 @@ def get_connection():
     finally:
         conn.close()
         print("[SMH] Database connection closed.")
-
+        
