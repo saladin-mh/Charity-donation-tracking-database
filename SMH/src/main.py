@@ -18,7 +18,7 @@ ADMIN_PASSWORD = "1234"
 def display_banner():
     print("\n" + "*" * 47)
     print("*    Welcome to SMH Charity Tracker   *")
-    print("*         ❤️ Making Change ❤️         *")
+    print("*         ❤️  Making Change ❤️         *")
     print("*" * 47 + "\n")
 
 def login():
