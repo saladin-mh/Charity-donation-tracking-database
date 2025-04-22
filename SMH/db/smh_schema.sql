@@ -1,11 +1,14 @@
--- SMH Charity Donation Tracker Schema
--- Version 1.0
+-- SMH Charity Donation Tracker Database Schema
 -- Author: [Your Name]
--- Created: 2025-04-11
+-- Purpose: Structured relational schema for tracking charity donations
+-- Compliance: Normalised to 3NF, with enforced relational integrity
 
 PRAGMA foreign_keys = ON;
 
-CREATE TABLE donors (
+-- -------------------------
+-- Donors Table
+-- -------------------------
+CREATE TABLE IF NOT EXISTS donors (
     donor_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
     surname TEXT NOT NULL,
@@ -15,7 +18,10 @@ CREATE TABLE donors (
     phone_number TEXT
 );
 
-CREATE TABLE events (
+-- -------------------------
+-- Events Table
+-- -------------------------
+CREATE TABLE IF NOT EXISTS events (
     event_id INTEGER PRIMARY KEY AUTOINCREMENT,
     event_name TEXT NOT NULL,
     room_info TEXT,
@@ -23,14 +29,20 @@ CREATE TABLE events (
     cost REAL NOT NULL CHECK (cost >= 0)
 );
 
-CREATE TABLE volunteers (
+-- -------------------------
+-- Volunteers Table
+-- -------------------------
+CREATE TABLE IF NOT EXISTS volunteers (
     volunteer_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     phone_number TEXT
 );
 
-CREATE TABLE donations (
+-- -------------------------
+-- Donations Table
+-- -------------------------
+CREATE TABLE IF NOT EXISTS donations (
     donation_id INTEGER PRIMARY KEY AUTOINCREMENT,
     amount REAL NOT NULL CHECK (amount > 0),
     donation_date DATE NOT NULL,
