@@ -1,5 +1,3 @@
-# src/main.py
-
 """
 Main CLI interface for the SMH Charity Donation Tracker system.
 
@@ -7,15 +5,10 @@ Allows admin users to manage donors, volunteers, events, and donations.
 Supports full CRUD operations and integrated search functionality.
 """
 
-import sys
-import os
-from services import search
+import getpass
 from tabulate import tabulate
 
-# Add root project path to sys.path for module imports
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-import getpass
+from services import search
 from models.donor import Donor
 from models.volunteer import Volunteer
 from models.event import Event
@@ -39,9 +32,8 @@ def login():
     if password == ADMIN_PASSWORD:
         print("\n✅ Login successful.\n")
         return True
-    else:
-        print("❌ Incorrect password. Access denied.")
-        return False
+    print("❌ Incorrect password. Access denied.")
+    return False
 
 
 def main_menu():
@@ -221,8 +213,6 @@ def search_menu():
             print("No results found.")
 
 
-# ---------- Entry Point ----------
-
 def main():
     """Initialises the database and launches the application."""
     display_banner()
@@ -233,4 +223,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
+

@@ -1,0 +1,23 @@
+[MASTER]
+init-hook='import sys; sys.path.append("src")'
+ignore=venv
+jobs=1
+
+[MESSAGES CONTROL]
+disable=
+    C0114,  ; missing-module-docstring
+    C0116,  ; missing-function-docstring
+    C0411,  ; wrong-import-order
+    C0413,  ; wrong-import-position
+
+[FORMAT]
+max-line-length=100
+
+[DESIGN]
+max-args=10
+
+[REPORTS]
+output-format=colorized
+
+[TYPECHECK]
+ignored-modules=db,models,services
