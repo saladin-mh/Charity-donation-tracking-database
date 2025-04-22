@@ -4,6 +4,11 @@ Main CLI interface for the SMH Charity Donation Tracker system.
 Allows admin users to manage donors, volunteers, events, and donations.
 Supports full CRUD operations and integrated search functionality.
 """
+import sys
+import os
+
+# Ensure the project root (one level above /src) is in the import path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import getpass
 from tabulate import tabulate
