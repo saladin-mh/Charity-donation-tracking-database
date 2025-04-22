@@ -1,10 +1,23 @@
 # src/models/donor.py
 
+"""
+Donor model for SMH Charity Donation Tracker.
+
+Provides database operations for creating, retrieving,
+updating, and deleting donor records.
+"""
+
 from db.db_manager import get_connection
+
 
 class Donor:
     @staticmethod
     def create(first_name, surname, business_name=None, postcode=None, house_number=None, phone_number=None):
+        """
+        Add a new donor to the database.
+
+        All fields except first_name and surname are optional.
+        """
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -16,14 +29,22 @@ class Donor:
 
     @staticmethod
     def read_all():
+        """
+        Retrieve all donors from the database.
+
+        Returns:
+            list: All donor records as sqlite3.Row objects.
+        """
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM donors")
-            donors = cursor.fetchall()
-            return donors
+            return cursor.fetchall()
 
     @staticmethod
     def read_by_id(donor_id):
+        """
+        Retrieve a specific donor by their unique ID.
+        """
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM donors WHERE donor_id = ?", (donor_id,))
@@ -31,6 +52,11 @@ class Donor:
 
     @staticmethod
     def update(donor_id, first_name=None, surname=None, business_name=None, postcode=None, house_number=None, phone_number=None):
+        """
+        Update donor information. Fields are optional.
+
+        Existing values are preserved unless new data is provided.
+        """
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -48,6 +74,11 @@ class Donor:
 
     @staticmethod
     def delete(donor_id):
+        """
+        Attempt to delete a donor record by ID.
+
+        Will fail if the donor is linked to existing donations.
+        """
         with get_connection() as conn:
             cursor = conn.cursor()
             try:
