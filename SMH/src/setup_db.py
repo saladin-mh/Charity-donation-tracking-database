@@ -21,7 +21,7 @@ def run_schema():
 
     This creates all tables and constraints required by the application.
     """
-    with open(SCHEMA_PATH, "r") as f:
+    with open(SCHEMA_PATH, "r", encoding="utf-8") as f:
         schema_sql = f.read()
 
     with sqlite3.connect(DB_PATH) as conn:

@@ -1,5 +1,3 @@
-# src/services/search.py
-
 """
 Search services for SMH Charity Donation Tracker.
 
@@ -10,10 +8,6 @@ Provides lookup functionality to retrieve donations by:
 
 Supports partial matches via SQL LIKE queries.
 """
-
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from db.db_manager import get_connection
 

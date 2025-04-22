@@ -36,4 +36,3 @@ def get_connection():
     finally:
         conn.close()
         print("[SMH] Database connection closed.")
-        # Ensure the database is initialized
