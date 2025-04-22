@@ -51,6 +51,8 @@ def main_menu():
         elif choice == "4":
             donation_menu()
         elif choice == "5":
+            search_menu()
+        elif choice == "6":
             print("👋 Exiting SMH. Goodbye!")
             break
         else:
