@@ -170,5 +170,33 @@ def main():
 
 if __name__ == "__main__":
     main()
-    # This is the main entry point of the SMH Charity Tracker application.
-    # It initializes the database, handles user login, and displays the main menu.
+   
+
+   def search_menu():
+    """CLI menu for searching donations by donor, volunteer, or event."""
+    while True:
+        print("\n--- Search Donations ---")
+        print("1. By Donor Name")
+        print("2. By Event Name")
+        print("3. By Volunteer Name")
+        print("4. Back to Main Menu")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            name = input("Enter donor name to search: ")
+            results = search.search_donations_by_donor_name(name)
+        elif choice == "2":
+            name = input("Enter event name to search: ")
+            results = search.search_donations_by_event_name(name)
+        elif choice == "3":
+            name = input("Enter volunteer name to search: ")
+            results = search.search_donations_by_volunteer_name(name)
+        elif choice == "4":
+            break
+        else:
+            print("Invalid choice.")
+            continue
+
+        print(f"\nFound {len(results)} result(s):")
+        for r in results:
+            print(dict(r))
