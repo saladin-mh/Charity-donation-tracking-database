@@ -1,10 +1,26 @@
 # src/models/volunteer.py
 
+"""
+Volunteer model for SMH Charity Donation Tracker.
+
+Supports full CRUD operations for managing volunteers,
+who may be linked to donation records via foreign keys.
+"""
+
 from db.db_manager import get_connection
+
 
 class Volunteer:
     @staticmethod
     def create(first_name, last_name, phone_number=None):
+        """
+        Insert a new volunteer record into the database.
+
+        Parameters:
+        - first_name (str): The volunteer's given name.
+        - last_name (str): The volunteer's surname.
+        - phone_number (str): Optional contact number.
+        """
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -16,6 +32,12 @@ class Volunteer:
 
     @staticmethod
     def read_all():
+        """
+        Fetch all volunteer records from the database.
+
+        Returns:
+            list: Rows as sqlite3.Row objects.
+        """
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM volunteers")
@@ -23,6 +45,9 @@ class Volunteer:
 
     @staticmethod
     def read_by_id(volunteer_id):
+        """
+        Retrieve a single volunteer record by their unique ID.
+        """
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM volunteers WHERE volunteer_id = ?", (volunteer_id,))
@@ -30,6 +55,11 @@ class Volunteer:
 
     @staticmethod
     def update(volunteer_id, first_name=None, last_name=None, phone_number=None):
+        """
+        Update an existing volunteer's details.
+
+        Fields left as None will retain existing values using COALESCE.
+        """
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -44,6 +74,11 @@ class Volunteer:
 
     @staticmethod
     def delete(volunteer_id):
+        """
+        Attempt to delete a volunteer record.
+
+        Will fail if the volunteer is referenced in the donations table.
+        """
         with get_connection() as conn:
             cursor = conn.cursor()
             try:
