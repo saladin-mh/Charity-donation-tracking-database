@@ -87,4 +87,3 @@ class Donation:
             cursor.execute("DELETE FROM donations WHERE donation_id = ?", (donation_id,))
             conn.commit()
             print(f"[✔] Donation ID {donation_id} deleted.")
-
