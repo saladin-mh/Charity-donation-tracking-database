@@ -2,6 +2,7 @@
 
 import sys
 import os
+from services import search
 
 # Add root project path to sys.path for module imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -37,7 +38,8 @@ def main_menu():
         print("2. Manage Events")
         print("3. Manage Volunteers")
         print("4. Manage Donations")
-        print("5. Exit")
+        print("5. Search Donations")
+        print("6. Exit")
 
         choice = input("Select an option (1-5): ")
         if choice == "1":
@@ -160,19 +162,8 @@ def donation_menu():
         else:
             print("Invalid choice.")
 
-# ---------- Entry Point ----------
 
-def main():
-    display_banner()
-    if login():
-        initialize_database()
-        main_menu()
-
-if __name__ == "__main__":
-    main()
-   
-
-   def search_menu():
+def search_menu():
     """CLI menu for searching donations by donor, volunteer, or event."""
     while True:
         print("\n--- Search Donations ---")
@@ -200,3 +191,15 @@ if __name__ == "__main__":
         print(f"\nFound {len(results)} result(s):")
         for r in results:
             print(dict(r))
+
+
+# ---------- Entry Point ----------
+
+def main():
+    display_banner()
+    if login():
+        initialize_database()
+        main_menu()
+
+if __name__ == "__main__":
+    main()
