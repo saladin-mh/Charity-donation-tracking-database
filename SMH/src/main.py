@@ -3,6 +3,8 @@
 import sys
 import os
 from services import search
+from tabulate import tabulate
+
 
 # Add root project path to sys.path for module imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -191,8 +193,14 @@ def search_menu():
             continue
 
         print(f"\nFound {len(results)} result(s):")
-        for r in results:
-            print(dict(r))
+
+        if results:
+            # Convert sqlite3.Row to list of dicts
+            headers = results[0].keys()
+            rows = [tuple(r) for r in results]
+            print(tabulate(rows, headers=headers, tablefmt="grid"))
+        else:
+            print("No results found.")
 
 
 # ---------- Entry Point ----------

@@ -4,8 +4,12 @@
 Search services for SMH Charity Donation Tracker.
 Provides lookup functionality by donor name, volunteer, or event.
 """
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from db.db_manager import get_connection
+
 
 
 def search_donations_by_donor_name(name_query):
