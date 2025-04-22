@@ -1,5 +1,12 @@
 # src/test_volunteer.py
 
+"""
+Test script for the Volunteer model in the SMH application.
+
+Initialises the database, inserts a sample volunteer,
+and displays all volunteer records to verify model logic.
+"""
+
 import sys
 import os
 
@@ -9,8 +16,10 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from models.volunteer import Volunteer
 from db.db_manager import initialize_database
 
+
 def run_test():
-    print("[SMH TEST] Initializing DB...")
+    """Run a basic test to verify volunteer creation and listing."""
+    print("[SMH TEST] Initialising DB...")
     initialize_database()
 
     print("[SMH TEST] Adding volunteer...")
@@ -25,10 +34,7 @@ def run_test():
     for v in volunteers:
         print(dict(v))
 
+
 if __name__ == "__main__":
     run_test()
     print("[SMH TEST] Test completed.")
-    # This script is for testing purposes only.
-    # It initializes the database and adds a test volunteer.
-    # It then fetches and prints all volunteers from the database.
-    # The test is run when the script is executed directly.
