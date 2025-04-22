@@ -1,10 +1,16 @@
 # src/main.py
 
+"""
+Main CLI interface for the SMH Charity Donation Tracker system.
+
+Allows admin users to manage donors, volunteers, events, and donations.
+Supports full CRUD operations and integrated search functionality.
+"""
+
 import sys
 import os
 from services import search
 from tabulate import tabulate
-
 
 # Add root project path to sys.path for module imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -18,13 +24,17 @@ from db.db_manager import initialize_database
 
 ADMIN_PASSWORD = "1234"
 
+
 def display_banner():
+    """Displays application header banner."""
     print("\n" + "*" * 47)
     print("*    Welcome to SMH Charity Tracker   *")
     print("*         ❤️  Making Change ❤️         *")
     print("*" * 47 + "\n")
 
+
 def login():
+    """Handles secure admin login using predefined password."""
     password = getpass.getpass("Please log in:\nPassword: ")
     if password == ADMIN_PASSWORD:
         print("\n✅ Login successful.\n")
@@ -33,7 +43,9 @@ def login():
         print("❌ Incorrect password. Access denied.")
         return False
 
+
 def main_menu():
+    """Displays and handles the main navigation menu."""
     while True:
         print("\n--- Main Menu ---")
         print("1. Manage Donors")
@@ -43,7 +55,7 @@ def main_menu():
         print("5. Search Donations")
         print("6. Exit")
 
-        choice = input("Select an option (1-5): ")
+        choice = input("Select an option (1-6): ")
         if choice == "1":
             donor_menu()
         elif choice == "2":
@@ -60,9 +72,11 @@ def main_menu():
         else:
             print("⚠️ Invalid selection. Please try again.")
 
+
 # ----------- Submenus -----------
 
 def donor_menu():
+    """Submenu for managing donor records."""
     while True:
         print("\n--- Donor Menu ---")
         print("1. Add Donor")
@@ -89,7 +103,9 @@ def donor_menu():
         else:
             print("Invalid choice.")
 
+
 def volunteer_menu():
+    """Submenu for managing volunteer records."""
     while True:
         print("\n--- Volunteer Menu ---")
         print("1. Add Volunteer")
@@ -113,7 +129,9 @@ def volunteer_menu():
         else:
             print("Invalid choice.")
 
+
 def event_menu():
+    """Submenu for managing event records."""
     while True:
         print("\n--- Event Menu ---")
         print("1. Add Event")
@@ -138,7 +156,9 @@ def event_menu():
         else:
             print("Invalid choice.")
 
+
 def donation_menu():
+    """Submenu for managing donation records."""
     while True:
         print("\n--- Donation Menu ---")
         print("1. Add Donation")
@@ -168,7 +188,7 @@ def donation_menu():
 
 
 def search_menu():
-    """CLI menu for searching donations by donor, volunteer, or event."""
+    """Submenu to search donations by donor, volunteer, or event."""
     while True:
         print("\n--- Search Donations ---")
         print("1. By Donor Name")
@@ -193,9 +213,7 @@ def search_menu():
             continue
 
         print(f"\nFound {len(results)} result(s):")
-
         if results:
-            # Convert sqlite3.Row to list of dicts
             headers = results[0].keys()
             rows = [tuple(r) for r in results]
             print(tabulate(rows, headers=headers, tablefmt="grid"))
@@ -206,10 +224,13 @@ def search_menu():
 # ---------- Entry Point ----------
 
 def main():
+    """Initialises the database and launches the application."""
     display_banner()
     if login():
         initialize_database()
         main_menu()
 
+
 if __name__ == "__main__":
     main()
+    
