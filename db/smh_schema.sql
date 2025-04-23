@@ -55,3 +55,13 @@ CREATE TABLE IF NOT EXISTS donations (
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE RESTRICT,
     FOREIGN KEY (volunteer_id) REFERENCES volunteers(volunteer_id) ON DELETE SET NULL
 );
+
+-- -------------------------
+-- admin_users Table
+-- -------------------------
+
+CREATE TABLE IF NOT EXISTS admin_users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL
+);
