@@ -6,30 +6,33 @@ Supports full CRUD operations and integrated search functionality.
 """
 import sys
 import os
+import getpass
+
+from tabulate import tabulate
 
 # Ensure the project root (one level above /src) is in the import path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-import getpass
-from tabulate import tabulate
-from models.admin import AdminUser
+# Grouped imports by module structure
+from db.db_manager import initialize_database
 from services import search
+from models.admin import AdminUser
 from models.donor import Donor
 from models.volunteer import Volunteer
 from models.event import Event
 from models.donation import Donation
-from db.db_manager import initialize_database
 
 ADMIN_PASSWORD = "1234"
 
 def display_banner():
     print("***************************************")
     print("*    Welcome to SMH Charity Tracker   *")
-    print("*           ❤️ Making Change ❤️       *")
+    print("*          ❤️   Making Change ❤️        *")
     print("***************************************")
 
 def login():
-    display_banner()
+    """Handles admin user login."""
+    print("🔒 Admin Login")
     username = input("Username: ")
     password = getpass.getpass("Password: ")
     if AdminUser.authenticate(username, password):
