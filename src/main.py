@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 import getpass
 from tabulate import tabulate
-
+from models.admin import AdminUser
 from services import search
 from models.donor import Donor
 from models.volunteer import Volunteer
@@ -22,23 +22,22 @@ from db.db_manager import initialize_database
 
 ADMIN_PASSWORD = "1234"
 
-
 def display_banner():
-    """Displays application header banner."""
-    print("\n" + "*" * 47)
+    print("***************************************")
     print("*    Welcome to SMH Charity Tracker   *")
-    print("*         ❤️  Making Change ❤️         *")
-    print("*" * 47 + "\n")
-
+    print("*           ❤️ Making Change ❤️       *")
+    print("***************************************")
 
 def login():
-    """Handles secure admin login using predefined password."""
-    password = getpass.getpass("Please log in:\nPassword: ")
-    if password == ADMIN_PASSWORD:
-        print("\n✅ Login successful.\n")
+    display_banner()
+    username = input("Username: ")
+    password = getpass.getpass("Password: ")
+    if AdminUser.authenticate(username, password):
+        print("Login successful!")
         return True
-    print("❌ Incorrect password. Access denied.")
+    print("Invalid credentials. Access denied.")
     return False
+
 
 
 def main_menu():
