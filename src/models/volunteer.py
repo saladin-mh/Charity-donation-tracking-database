@@ -56,7 +56,7 @@ class Volunteer:
             cursor.execute("""
                 UPDATE volunteers
                 SET first_name = ?, surname = ?, phone_number = ?
-                WHERE _id = ?
+                WHERE volunteer_id = ?
             """, (first_name, surname, phone_number, volunteer_id))
             conn.commit()
 

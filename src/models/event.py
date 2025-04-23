@@ -7,7 +7,6 @@ Manages CRUD operations on event data using SQLite3.
 import sqlite3
 from db.db_manager import get_connection
 
-
 class Event:
     """
     Provides static methods for creating, reading, updating, and deleting events
@@ -47,7 +46,7 @@ class Event:
 
     @staticmethod
     def update(event_id, event_name, room_info, booking_datetime, cost):
-        """Update an event's details."""
+        """Update event information."""
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""

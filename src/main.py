@@ -4,6 +4,7 @@ Main CLI interface for the SMH Charity Donation Tracker system.
 Allows admin users to manage donors, volunteers, events, and donations.
 Supports full CRUD operations and integrated search functionality.
 """
+
 import sys
 import os
 import getpass
@@ -41,8 +42,6 @@ def login():
     print("Invalid credentials. Access denied.")
     return False
 
-
-
 def main_menu():
     """Displays and handles the main navigation menu."""
     while True:
@@ -70,7 +69,6 @@ def main_menu():
             break
         else:
             print("⚠️ Invalid selection. Please try again.")
-
 
 # ----------- Submenus -----------
 
@@ -113,15 +111,14 @@ def donor_menu():
         else:
             print("Invalid choice.")
 
-
 def volunteer_menu():
     """Submenu for managing volunteer records."""
     while True:
         print("\n--- Volunteer Menu ---")
         print("1. Add Volunteer")
         print("2. View All Volunteers")
-        print("3. Delete Volunteer")
-        print("4. Update Volunteer")
+        print("3. Update Volunteer")
+        print("4. Delete Volunteer")
         print("5. Back to Main Menu")
         choice = input("Choose an option: ")
         if choice == "1":
@@ -134,19 +131,18 @@ def volunteer_menu():
             for v in Volunteer.read_all():
                 print(dict(v))
         elif choice == "3":
-            Volunteer.delete(int(input("Enter Volunteer ID to delete: ")))
+            Volunteer.update(
+                int(input("Volunteer ID to update: ")),
+                input("Updated First name: "),
+                input("Updated Surname: "),
+                input("Updated Phone number: ")
+            )
         elif choice == "4":
-            volunteer_id = int(input("Enter Volunteer ID to update: "))
-            first_name = input("New first name: ")
-            surname = input("New surname: ")
-            phone_number = input("New phone number: ")
-            Volunteer.update(volunteer_id, first_name, surname, phone_number)
+            Volunteer.delete(int(input("Enter Volunteer ID to delete: ")))
         elif choice == "5":
             break
         else:
             print("Invalid choice.")
-
-
 
 def event_menu():
     """Submenu for managing event records."""
@@ -154,8 +150,8 @@ def event_menu():
         print("\n--- Event Menu ---")
         print("1. Add Event")
         print("2. View All Events")
-        print("3. Delete Event")
-        print("4. Update Event")
+        print("3. Update Event")
+        print("4. Delete Event")
         print("5. Back to Main Menu")
         choice = input("Choose an option: ")
         if choice == "1":
@@ -169,20 +165,19 @@ def event_menu():
             for e in Event.read_all():
                 print(dict(e))
         elif choice == "3":
-            Event.delete(int(input("Enter Event ID to delete: ")))
+            Event.update(
+                int(input("Enter Event ID to update: ")),
+                input("New Event name: "),
+                input("New Room info: "),
+                input("New Booking date/time (YYYY-MM-DD HH:MM:SS): "),
+                float(input("New Cost: "))
+            )
         elif choice == "4":
-            event_id = int(input("Enter Event ID to update: "))
-            event_name = input("New event name: ")
-            room_info = input("New room info: ")
-            booking_datetime = input("New booking date/time (YYYY-MM-DD HH:MM:SS): ")
-            cost = float(input("New cost: "))
-            Event.update(event_id, event_name, room_info, booking_datetime, cost)
+            Event.delete(int(input("Enter Event ID to delete: ")))
         elif choice == "5":
             break
         else:
             print("Invalid choice.")
-
-
 
 def donation_menu():
     """Submenu for managing donation records."""
@@ -190,42 +185,40 @@ def donation_menu():
         print("\n--- Donation Menu ---")
         print("1. Add Donation")
         print("2. View All Donations")
-        print("3. Delete Donation")
-        print("4. Update Donation")
+        print("3. Update Donation")
+        print("4. Delete Donation")
         print("5. Back to Main Menu")
         choice = input("Choose an option: ")
         if choice == "1":
             Donation.create(
                 float(input("Amount: ")),
                 input("Donation date (YYYY-MM-DD): "),
-                input("Gift Aid (True/False): ").lower() == "true",
+                input("Gift Aid (yes/no): ").lower() == "yes",
                 input("Notes: "),
                 int(input("Donor ID: ")),
                 int(input("Event ID: ")),
-                int(input("Volunteer ID: "))
+                int(input("Volunteer ID (or 0 if none): ")) or None
             )
         elif choice == "2":
             for d in Donation.read_all():
                 print(dict(d))
         elif choice == "3":
-            Donation.delete(int(input("Enter Donation ID to delete: ")))
+            Donation.update(
+                int(input("Donation ID to update: ")),
+                float(input("New Amount: ")),
+                input("New Donation date (YYYY-MM-DD): "),
+                input("Gift Aid (yes/no): ").lower() == "yes",
+                input("New Notes: "),
+                int(input("New Donor ID: ")),
+                int(input("New Event ID: ")),
+                int(input("New Volunteer ID (or 0 if none): ")) or None
+            )
         elif choice == "4":
-            donation_id = int(input("Enter Donation ID to update: "))
-            amount = float(input("New amount: "))
-            donation_date = input("New donation date (YYYY-MM-DD): ")
-            gift_aid = input("Gift Aid (True/False): ").lower() == "true"
-            notes = input("New notes: ")
-            donor_id = int(input("New Donor ID: "))
-            event_id = int(input("New Event ID: "))
-            volunteer_id = int(input("New Volunteer ID: "))
-            Donation.update(donation_id, amount, donation_date, gift_aid, notes,
-                            donor_id, event_id, volunteer_id)
+            Donation.delete(int(input("Enter Donation ID to delete: ")))
         elif choice == "5":
             break
         else:
             print("Invalid choice.")
-
-
 
 def search_menu():
     """Submenu to search donations by donor, volunteer, or event."""
@@ -260,14 +253,12 @@ def search_menu():
         else:
             print("No results found.")
 
-
 def main():
     """Initialises the database and launches the application."""
     display_banner()
     if login():
         initialize_database()
         main_menu()
-
 
 if __name__ == "__main__":
     main()
