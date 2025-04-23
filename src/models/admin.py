@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+
 import bcrypt
 from db.db_manager import get_connection
 
@@ -31,7 +35,7 @@ class AdminUser:
         """Authenticate admin credentials using hashed password."""
         with get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT password_hash FROM admins WHERE username = ?", (username,))
+            cursor.execute("SELECT password_hash FROM admin_users WHERE username = ?", (username,))
             row = cursor.fetchone()
             if row and bcrypt.checkpw(password.encode(), row[0]):
                 return True
