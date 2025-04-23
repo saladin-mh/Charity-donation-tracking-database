@@ -11,10 +11,11 @@ def create_admin_user(username, password):
     hashed_pw = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     with get_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO admin_users (username, password_hash) VALUES (?, ?)", (username, hashed_pw))
+        cursor.execute("INSERT INTO admin_users (username, password_hash) VALUES (?, ?)",
+                       (username, hashed_pw)
+        )
         conn.commit()
         print("✅ Admin user created.")
 
 if __name__ == "__main__":
     create_admin_user("admin", "1234")
-
