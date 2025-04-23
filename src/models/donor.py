@@ -48,12 +48,13 @@ class Donor:
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                UPDATE donors
-                SET first_name = ?, surname = ?, business_name = ?, postcode = ?, 
-                    house_number = ?, phone_number = ?
-                WHERE donor_id = ?
-            """, (first_name, surname, business_name, postcode, house_number, phone_number, donor_id))
-            conn.commit()
+            UPDATE donors
+            SET first_name = ?, surname = ?, business_name = ?, postcode = ?,
+                house_number = ?, phone_number = ?
+            WHERE id = ?
+        """, (first_name, surname, business_name, postcode, house_number, phone_number, donor_id))
+        conn.commit()
+
 
     @staticmethod
     def delete(donor_id):

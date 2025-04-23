@@ -15,16 +15,16 @@ class Volunteer:
     """
 
     @staticmethod
-    def create(first_name, last_name, phone_number):
+    def create(first_name, surname, phone_number):
         """Insert a new volunteer into the database."""
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 INSERT INTO volunteers (
-                    first_name, last_name, phone_number
+                    first_name, surname, phone_number
                 )
                 VALUES (?, ?, ?)
-            """, (first_name, last_name, phone_number))
+            """, (first_name, surname, phone_number))
             conn.commit()
 
     @staticmethod
@@ -49,15 +49,15 @@ class Volunteer:
             return cursor.fetchone()
 
     @staticmethod
-    def update(volunteer_id, first_name, last_name, phone_number):
+    def update(volunteer_id, first_name, surname, phone_number):
         """Update volunteer information."""
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 UPDATE volunteers
-                SET first_name = ?, last_name = ?, phone_number = ?
-                WHERE volunteer_id = ?
-            """, (first_name, last_name, phone_number, volunteer_id))
+                SET first_name = ?, surname = ?, phone_number = ?
+                WHERE _id = ?
+            """, (first_name, surname, phone_number, volunteer_id))
             conn.commit()
 
     @staticmethod

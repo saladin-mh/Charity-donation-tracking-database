@@ -11,6 +11,7 @@ from db.db_manager import get_connection
 
 
 class Donation:
+    """Handels donation records in the database."""
     @staticmethod
     def create(amount, donation_date, gift_aid, notes,
                donor_id=None, event_id=None, volunteer_id=None):

@@ -22,7 +22,7 @@ def initialize_database():
 def get_connection():
     """
     Provides a context-managed connection to the SQLite database.
-    
+
     Ensures:
     - Foreign key support is always enabled
     - Connections are properly closed

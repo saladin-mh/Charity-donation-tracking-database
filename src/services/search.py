@@ -67,9 +67,9 @@ def search_donations_by_volunteer_name(vol_query):
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT d.*, v.first_name, v.last_name
+            SELECT d.*, v.first_name, v.surname
             FROM donations d
             JOIN volunteers v ON d.volunteer_id = v.volunteer_id
-            WHERE v.first_name LIKE ? OR v.last_name LIKE ?
+            WHERE v.first_name LIKE ? OR v.surname LIKE ?
         """, (f"%{vol_query}%", f"%{vol_query}%"))
         return cursor.fetchall()

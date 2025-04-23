@@ -17,7 +17,7 @@ def run_test():
     print("[SMH TEST] Adding volunteer...")
     Volunteer.create(
         first_name="Jenny",
-        last_name="Helpinghands",
+        surname="Helpinghands",
         phone_number="0740000000"
     )
 

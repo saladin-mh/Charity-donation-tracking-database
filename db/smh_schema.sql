@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS events (
 CREATE TABLE IF NOT EXISTS volunteers (
     volunteer_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
+    surname TEXT NOT NULL,
     phone_number TEXT
 );
 
