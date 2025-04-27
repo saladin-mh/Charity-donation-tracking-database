@@ -7,7 +7,6 @@ import sys
 import os
 import getpass
 from tabulate import tabulate
-from db.db_manager import get_connection
 
 # Ensure the project root (one level above /src) is in the import path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -20,6 +19,8 @@ from models.donor import Donor
 from models.volunteer import Volunteer
 from models.event import Event
 from models.donation import Donation
+from models.contact_preference import ContactPreference
+from models.event_sponsor import EventSponsor
 
 ADMIN_PASSWORD = "1234"
 
@@ -258,96 +259,69 @@ def search_menu():
             print("No results found.")
 
 def contact_preference_menu():
-    """Submenu for managing donor contact preferences."""
+    """Submenu for managing contact preference records."""
     while True:
-        print("\n--- Contact Preference Menu ---")
+        print("\n--- Contact Preferences Menu ---")
         print("1. Add Contact Preference")
-        print("2. View All Contact Preferences")
-        print("3. Delete Contact Preference")
-        print("4. Back to Main Menu")
-
+        print("2. View All Preferences")
+        print("3. Update Preference")
+        print("4. Delete Preference")
+        print("5. Back to Main Menu")
         choice = input("Choose an option: ")
-
         if choice == "1":
-            donor_id = int(input("Donor ID: "))
-            method = input("Preferred Contact Method (Email/Phone/Post): ")
-            with get_connection() as conn:
-                cursor = conn.cursor()
-                cursor.execute("""
-                    INSERT INTO contact_preferences (donor_id, method)
-                    VALUES (?, ?)
-                """, (donor_id, method))
-                conn.commit()
-                print("Contact preference added successfully.")
-
+            ContactPreference.create(
+                int(input("Donor ID: ")),
+                input("Preferred contact method (email/phone/post): "),
+                int(input("Newsletter subscription (1 = Yes, 0 = No): "))
+            )
         elif choice == "2":
-            with get_connection() as conn:
-                cursor = conn.cursor()
-                cursor.execute("SELECT * FROM contact_preferences")
-                results = cursor.fetchall()
-                for row in results:
-                    print(dict(row))
-
+            for pref in ContactPreference.read_all():
+                print(dict(pref))
         elif choice == "3":
-            preference_id = int(input("Enter Contact Preference ID to delete: "))
-            with get_connection() as conn:
-                cursor = conn.cursor()
-                cursor.execute("DELETE FROM contact_preferences WHERE preference_id = ?",
-                               (preference_id,))
-                conn.commit()
-                print("Contact preference deleted successfully.")
-
+            ContactPreference.update(
+                int(input("Preference ID: ")),
+                input("New preferred contact method: "),
+                int(input("Newsletter subscription (1 = Yes, 0 = No): "))
+            )
         elif choice == "4":
+            ContactPreference.delete(int(input("Enter Preference ID to delete: ")))
+        elif choice == "5":
             break
-
         else:
             print("Invalid choice.")
 
 def event_sponsor_menu():
-    """Submenu for managing event sponsors."""
+    """Submenu for managing event sponsor records."""
     while True:
         print("\n--- Event Sponsor Menu ---")
-        print("1. Add Event Sponsor")
-        print("2. View All Event Sponsors")
-        print("3. Delete Event Sponsor")
-        print("4. Back to Main Menu")
-
+        print("1. Add Sponsor")
+        print("2. View All Sponsors")
+        print("3. Update Sponsor")
+        print("4. Delete Sponsor")
+        print("5. Back to Main Menu")
         choice = input("Choose an option: ")
-
         if choice == "1":
-            event_id = int(input("Event ID: "))
-            sponsor_name = input("Sponsor Name: ")
-            contribution_amount = float(input("Contribution Amount: "))
-            with get_connection() as conn:
-                cursor = conn.cursor()
-                cursor.execute("""
-                    INSERT INTO event_sponsors (event_id, sponsor_name, contribution_amount)
-                    VALUES (?, ?, ?)
-                """, (event_id, sponsor_name, contribution_amount))
-                conn.commit()
-                print("Event sponsor added successfully.")
-
+            EventSponsor.create(
+                input("Sponsor Name: "),
+                int(input("Event ID: ")),
+                float(input("Amount Contributed: "))
+            )
         elif choice == "2":
-            with get_connection() as conn:
-                cursor = conn.cursor()
-                cursor.execute("SELECT * FROM event_sponsors")
-                results = cursor.fetchall()
-                for row in results:
-                    print(dict(row))
-
+            for sponsor in EventSponsor.read_all():
+                print(dict(sponsor))
         elif choice == "3":
-            sponsor_id = int(input("Enter Sponsor ID to delete: "))
-            with get_connection() as conn:
-                cursor = conn.cursor()
-                cursor.execute("DELETE FROM event_sponsors WHERE sponsor_id = ?", (sponsor_id,))
-                conn.commit()
-                print("Event sponsor deleted successfully.")
-
+            EventSponsor.update(
+                int(input("Sponsor ID: ")),
+                input("New Sponsor Name: "),
+                float(input("New Amount Contributed: "))
+            )
         elif choice == "4":
+            EventSponsor.delete(int(input("Enter Sponsor ID to delete: ")))
+        elif choice == "5":
             break
-
         else:
             print("Invalid choice.")
+
 
 def main():
     """Initialises the database and launches the application."""
