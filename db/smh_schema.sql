@@ -88,3 +88,21 @@ CREATE TABLE IF NOT EXISTS event_sponsors (
     contribution_value REAL CHECK (contribution_value >= 0),
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE
 );
+
+-- Contact Preferences Table
+CREATE TABLE IF NOT EXISTS contact_preferences (
+    preference_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    donor_id INTEGER NOT NULL,
+    preferred_contact_method TEXT NOT NULL, -- e.g., 'email', 'phone', 'post'
+    allow_marketing BOOLEAN DEFAULT 0,
+    FOREIGN KEY (donor_id) REFERENCES donors(donor_id) ON DELETE CASCADE
+);
+
+-- Event Sponsors Table
+CREATE TABLE IF NOT EXISTS event_sponsors (
+    sponsor_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    sponsor_name TEXT NOT NULL,
+    contribution_amount REAL CHECK (contribution_amount >= 0),
+    event_id INTEGER NOT NULL,
+    FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE
+);
