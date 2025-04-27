@@ -4,10 +4,10 @@
 -- Compliance: Normalised to 3NF, with enforced relational integrity
 
 PRAGMA foreign_keys = ON;
-
--- -------------------------
+PRAGMA encoding = "UTF-8";
+PRAGMA journal_mode = "WAL";
 -- Donors Table
--- -------------------------
+
 CREATE TABLE IF NOT EXISTS donors (
     donor_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
@@ -18,9 +18,8 @@ CREATE TABLE IF NOT EXISTS donors (
     phone_number TEXT
 );
 
--- -------------------------
 -- Events Table
--- -------------------------
+
 CREATE TABLE IF NOT EXISTS events (
     event_id INTEGER PRIMARY KEY AUTOINCREMENT,
     event_name TEXT NOT NULL,
@@ -29,9 +28,8 @@ CREATE TABLE IF NOT EXISTS events (
     cost REAL NOT NULL CHECK (cost >= 0)
 );
 
--- -------------------------
 -- Volunteers Table
--- -------------------------
+
 CREATE TABLE IF NOT EXISTS volunteers (
     volunteer_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
@@ -39,9 +37,8 @@ CREATE TABLE IF NOT EXISTS volunteers (
     phone_number TEXT
 );
 
--- -------------------------
 -- Donations Table
--- -------------------------
+
 CREATE TABLE IF NOT EXISTS donations (
     donation_id INTEGER PRIMARY KEY AUTOINCREMENT,
     amount REAL NOT NULL CHECK (amount > 0),
@@ -56,9 +53,7 @@ CREATE TABLE IF NOT EXISTS donations (
     FOREIGN KEY (volunteer_id) REFERENCES volunteers(volunteer_id) ON DELETE SET NULL
 );
 
--- -------------------------
 -- admin_users Table
--- -------------------------
 
 CREATE TABLE IF NOT EXISTS admin_users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -66,9 +61,8 @@ CREATE TABLE IF NOT EXISTS admin_users (
     password_hash TEXT NOT NULL
 );
 
--- -------------------------
 -- Donor Contact Preferences Table
--- -------------------------
+
 CREATE TABLE IF NOT EXISTS donor_contact_preferences (
     preference_id INTEGER PRIMARY KEY AUTOINCREMENT,
     donor_id INTEGER NOT NULL,
@@ -77,9 +71,8 @@ CREATE TABLE IF NOT EXISTS donor_contact_preferences (
     FOREIGN KEY (donor_id) REFERENCES donors(donor_id) ON DELETE CASCADE
 );
 
--- -------------------------
 -- Event Sponsors Table
--- -------------------------
+
 CREATE TABLE IF NOT EXISTS event_sponsors (
     sponsor_id INTEGER PRIMARY KEY AUTOINCREMENT,
     event_id INTEGER NOT NULL,
@@ -89,24 +82,22 @@ CREATE TABLE IF NOT EXISTS event_sponsors (
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE
 );
 
--- -------------------------
--- Contact Preferences Table
--- -------------------------
+--Contact Preferences Table
+
 CREATE TABLE IF NOT EXISTS contact_preferences (
     preference_id INTEGER PRIMARY KEY AUTOINCREMENT,
     donor_id INTEGER NOT NULL,
-    preferred_contact_method TEXT NOT NULL, -- e.g., 'email', 'phone', 'post'
-    allow_marketing BOOLEAN DEFAULT 0,
+    preferred_contact_method TEXT CHECK(preferred_contact_method IN ('Phone', 'Email', 'Post')),
+    consent_given BOOLEAN DEFAULT 0,
     FOREIGN KEY (donor_id) REFERENCES donors(donor_id) ON DELETE CASCADE
 );
 
--- -------------------------
 -- Event Sponsors Table
--- -------------------------
+
 CREATE TABLE IF NOT EXISTS event_sponsors (
     sponsor_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    sponsor_name TEXT NOT NULL,
-    contribution_amount REAL CHECK (contribution_amount >= 0),
     event_id INTEGER NOT NULL,
+    sponsor_name TEXT NOT NULL,
+    sponsorship_amount REAL CHECK (sponsorship_amount > 0),
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE
 );

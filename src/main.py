@@ -1,15 +1,13 @@
 """
 Main CLI interface for the SMH Charity Donation Tracker system.
-
 Allows admin users to manage donors, volunteers, events, and donations.
 Supports full CRUD operations and integrated search functionality.
 """
-
 import sys
 import os
 import getpass
-
 from tabulate import tabulate
+from db.db_manager import get_connection
 
 # Ensure the project root (one level above /src) is in the import path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -43,7 +41,6 @@ def login():
     return False
 
 def main_menu():
-    """Displays and handles the main navigation menu."""
     while True:
         print("\n--- Main Menu ---")
         print("1. Manage Donors")
@@ -51,9 +48,12 @@ def main_menu():
         print("3. Manage Volunteers")
         print("4. Manage Donations")
         print("5. Search Donations")
-        print("6. Exit")
+        print("6. Manage Contact Preferences")
+        print("7. Manage Event Sponsors")
+        print("8. Exit")
 
-        choice = input("Select an option (1-6): ")
+        choice = input("Select an option (1-8): ")
+
         if choice == "1":
             donor_menu()
         elif choice == "2":
@@ -65,10 +65,14 @@ def main_menu():
         elif choice == "5":
             search_menu()
         elif choice == "6":
-            print("👋 Exiting SMH. Goodbye!")
+            contact_preference_menu()
+        elif choice == "7":
+            event_sponsor_menu()
+        elif choice == "8":
+            print("Goodbye!")
             break
         else:
-            print("⚠️ Invalid selection. Please try again.")
+            print("Invalid choice. Please try again.")
 
 # ----------- Submenus -----------
 
@@ -252,6 +256,97 @@ def search_menu():
             print(tabulate(rows, headers=headers, tablefmt="grid"))
         else:
             print("No results found.")
+
+def contact_preference_menu():
+    """Submenu for managing donor contact preferences."""
+    while True:
+        print("\n--- Contact Preference Menu ---")
+        print("1. Add Contact Preference")
+        print("2. View All Contact Preferences")
+        print("3. Delete Contact Preference")
+        print("4. Back to Main Menu")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            donor_id = int(input("Donor ID: "))
+            method = input("Preferred Contact Method (Email/Phone/Post): ")
+            with get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT INTO contact_preferences (donor_id, method)
+                    VALUES (?, ?)
+                """, (donor_id, method))
+                conn.commit()
+                print("Contact preference added successfully.")
+
+        elif choice == "2":
+            with get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT * FROM contact_preferences")
+                results = cursor.fetchall()
+                for row in results:
+                    print(dict(row))
+
+        elif choice == "3":
+            preference_id = int(input("Enter Contact Preference ID to delete: "))
+            with get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("DELETE FROM contact_preferences WHERE preference_id = ?", (preference_id,))
+                conn.commit()
+                print("Contact preference deleted successfully.")
+
+        elif choice == "4":
+            break
+
+        else:
+            print("Invalid choice.")
+
+def event_sponsor_menu():
+    """Submenu for managing event sponsors."""
+    while True:
+        print("\n--- Event Sponsor Menu ---")
+        print("1. Add Event Sponsor")
+        print("2. View All Event Sponsors")
+        print("3. Delete Event Sponsor")
+        print("4. Back to Main Menu")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            event_id = int(input("Event ID: "))
+            sponsor_name = input("Sponsor Name: ")
+            contribution_amount = float(input("Contribution Amount: "))
+            with get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT INTO event_sponsors (event_id, sponsor_name, contribution_amount)
+                    VALUES (?, ?, ?)
+                """, (event_id, sponsor_name, contribution_amount))
+                conn.commit()
+                print("Event sponsor added successfully.")
+
+        elif choice == "2":
+            with get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT * FROM event_sponsors")
+                results = cursor.fetchall()
+                for row in results:
+                    print(dict(row))
+
+        elif choice == "3":
+            sponsor_id = int(input("Enter Sponsor ID to delete: "))
+            with get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("DELETE FROM event_sponsors WHERE sponsor_id = ?", (sponsor_id,))
+                conn.commit()
+                print("Event sponsor deleted successfully.")
+
+        elif choice == "4":
+            break
+
+        else:
+            print("Invalid choice.")
 
 def main():
     """Initialises the database and launches the application."""
