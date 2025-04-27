@@ -3,10 +3,12 @@ Main CLI interface for the SMH Charity Donation Tracker system.
 Allows admin users to manage donors, volunteers, events, and donations.
 Supports full CRUD operations and integrated search functionality.
 """
-import sys
+# Removed redundant reimport of 'sys'
+import time  # Required for time.sleep in slow_print
 import os
 import getpass
 from tabulate import tabulate
+import sys
 
 # Ensure the project root (one level above /src) is in the import path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -24,11 +26,27 @@ from models.event_sponsor import EventSponsor
 
 ADMIN_PASSWORD = "1234"
 
+def slow_print(text, delay=0.03):
+    """Prints text slowly like a typewriter."""
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+    print()  # New line at the end
+
 def display_banner():
-    print("***************************************")
-    print("*    Welcome to SMH Charity Tracker   *")
-    print("*          ❤️   Making Change ❤️        *")
-    print("***************************************")
+    banner_lines = [
+        "╔══════════════════════════════════════════╗",
+        "║{:^42}║".format("SMH CHARITY TRACKER"),
+        "║{:^42}║".format("Empowering Donations, Changing Lives"),
+        "╚══════════════════════════════════════════╝",
+        "",
+        "Welcome to the SMH Charity Donation Tracker!",
+        "This system allows you to manage donors, events, volunteers, and donations.",
+        "Please log in to access the admin features.\n",
+    ]
+    for line in banner_lines:
+        slow_print(line)
 
 def login():
     """Handles admin user login."""
