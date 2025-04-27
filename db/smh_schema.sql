@@ -65,3 +65,26 @@ CREATE TABLE IF NOT EXISTS admin_users (
     username TEXT UNIQUE NOT NULL,
     password_hash TEXT NOT NULL
 );
+
+-- -------------------------
+-- Donor Contact Preferences Table
+-- -------------------------
+CREATE TABLE IF NOT EXISTS donor_contact_preferences (
+    preference_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    donor_id INTEGER NOT NULL,
+    contact_method TEXT NOT NULL,
+    consent_given BOOLEAN DEFAULT 0,
+    FOREIGN KEY (donor_id) REFERENCES donors(donor_id) ON DELETE CASCADE
+);
+
+-- -------------------------
+-- Event Sponsors Table
+-- -------------------------
+CREATE TABLE IF NOT EXISTS event_sponsors (
+    sponsor_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    event_id INTEGER NOT NULL,
+    sponsor_name TEXT NOT NULL,
+    contribution_type TEXT,
+    contribution_value REAL CHECK (contribution_value >= 0),
+    FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE
+);
