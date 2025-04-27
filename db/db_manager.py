@@ -7,7 +7,6 @@ from contextlib import contextmanager
 # Define the database file location relative to this script
 DB_NAME = os.path.join(os.path.dirname(__file__), "smh.db")
 
-
 def initialize_database():
     """
     Initialises the SQLite database with the required settings.
@@ -16,7 +15,6 @@ def initialize_database():
     with sqlite3.connect(DB_NAME) as conn:
         conn.execute("PRAGMA foreign_keys = ON;")
         print("[SMH] Database initialised with foreign key enforcement.")
-
 
 @contextmanager
 def get_connection():
