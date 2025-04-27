@@ -89,7 +89,9 @@ CREATE TABLE IF NOT EXISTS event_sponsors (
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE
 );
 
+-- -------------------------
 -- Contact Preferences Table
+-- -------------------------
 CREATE TABLE IF NOT EXISTS contact_preferences (
     preference_id INTEGER PRIMARY KEY AUTOINCREMENT,
     donor_id INTEGER NOT NULL,
@@ -98,7 +100,9 @@ CREATE TABLE IF NOT EXISTS contact_preferences (
     FOREIGN KEY (donor_id) REFERENCES donors(donor_id) ON DELETE CASCADE
 );
 
+-- -------------------------
 -- Event Sponsors Table
+-- -------------------------
 CREATE TABLE IF NOT EXISTS event_sponsors (
     sponsor_id INTEGER PRIMARY KEY AUTOINCREMENT,
     sponsor_name TEXT NOT NULL,

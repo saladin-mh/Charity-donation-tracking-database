@@ -1,12 +1,10 @@
 """
 Volunteer model for the SMH Charity Donation Tracker.
-
 Manages volunteer records, enabling creation, listing, updating, and deletion.
 """
 
 import sqlite3
 from db.db_manager import get_connection
-
 
 class Volunteer:
     """
