@@ -292,7 +292,8 @@ def contact_preference_menu():
             preference_id = int(input("Enter Contact Preference ID to delete: "))
             with get_connection() as conn:
                 cursor = conn.cursor()
-                cursor.execute("DELETE FROM contact_preferences WHERE preference_id = ?", (preference_id,))
+                cursor.execute("DELETE FROM contact_preferences WHERE preference_id = ?",
+                               (preference_id,))
                 conn.commit()
                 print("Contact preference deleted successfully.")
 

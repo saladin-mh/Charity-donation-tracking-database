@@ -1,6 +1,18 @@
 from db.db_manager import get_connection
 
 class EventSponsor:
+    """
+    A class to manage CRUD operations for event sponsors in the database.
+    Methods:
+        create(event_id, sponsor_name, contribution_type, contribution_value):
+            Inserts a new sponsor record into the event_sponsors table.
+        read_all():
+            Retrieves all sponsor records from the event_sponsors table.
+        update(sponsor_id, sponsor_name, contribution_type, contribution_value):
+            Updates an existing sponsor record in the event_sponsors table.
+        delete(sponsor_id):
+            Deletes a sponsor record from the event_sponsors table.
+    """
     @staticmethod
     def create(event_id, sponsor_name, contribution_type, contribution_value):
         with get_connection() as conn:
