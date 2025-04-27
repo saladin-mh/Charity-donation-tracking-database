@@ -1,5 +1,5 @@
 -- SMH Charity Donation Tracker Database Schema
--- Author: [Your Name]
+-- Author: [Salahdine Maamri EL Hazmiri]
 -- Purpose: Structured relational schema for tracking charity donations
 -- Compliance: Normalised to 3NF, with enforced relational integrity
 
