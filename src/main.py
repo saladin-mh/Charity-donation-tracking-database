@@ -87,7 +87,10 @@ def main_menu():
         elif choice == "7":
             event_sponsor_menu()
         elif choice == "8":
-            print("Goodbye!")
+            print("Goodbye! Exiting the application...")
+            slow_print("Exiting in 3 seconds...", 0.5)  # Added a delay before exit
+            time.sleep(3)
+            sys.exit(0)  # Exit the program cleanly
             break
         else:
             print("Invalid choice. Please try again.")
@@ -113,8 +116,13 @@ def donor_menu():
                 input("Phone number: ")
             )
         elif choice == "2":
-            for d in Donor.read_all():
-                print(dict(d))
+            donors = Donor.read_all()
+            if donors:
+                headers = donors[0].keys()
+                rows = [tuple(d) for d in donors]
+                print(tabulate(rows, headers=headers, tablefmt="grid"))
+            else:
+                print("No donors found.")
         elif choice == "3":
             Donor.delete(int(input("Enter Donor ID to delete: ")))
         elif choice == "4":
@@ -149,8 +157,13 @@ def volunteer_menu():
                 input("Phone number: ")
             )
         elif choice == "2":
-            for v in Volunteer.read_all():
-                print(dict(v))
+            volunteers = Volunteer.read_all()
+            if volunteers:
+                headers = volunteers[0].keys()
+                rows = [tuple(v) for v in volunteers]
+                print(tabulate(rows, headers=headers, tablefmt="grid"))
+            else:
+                print("No volunteers found.")
         elif choice == "3":
             Volunteer.update(
                 int(input("Volunteer ID to update: ")),
@@ -183,8 +196,13 @@ def event_menu():
                 float(input("Cost: "))
             )
         elif choice == "2":
-            for e in Event.read_all():
-                print(dict(e))
+            events = Event.read_all()
+            if events:
+                headers = events[0].keys()
+                rows = [tuple(e) for e in events]
+                print(tabulate(rows, headers=headers, tablefmt="grid"))
+            else:
+                print("No events found.")
         elif choice == "3":
             Event.update(
                 int(input("Enter Event ID to update: ")),
@@ -221,8 +239,13 @@ def donation_menu():
                 int(input("Volunteer ID (or 0 if none): ")) or None
             )
         elif choice == "2":
-            for d in Donation.read_all():
-                print(dict(d))
+            donations = Donation.read_all()
+            if donations:
+                headers = donations[0].keys()
+                rows = [tuple(d) for d in donations]
+                print(tabulate(rows, headers=headers, tablefmt="grid"))
+            else:
+                print("No donations found.")
         elif choice == "3":
             Donation.update(
                 int(input("Donation ID to update: ")),
@@ -291,8 +314,13 @@ def contact_preference_menu():
                 int(input("Newsletter subscription (1 = Yes, 0 = No): "))
             )
         elif choice == "2":
-            for pref in ContactPreference.read_all():
-                print(dict(pref))
+            preferences = ContactPreference.read_all()
+            if preferences:
+                headers = preferences[0].keys()
+                rows = [tuple(p) for p in preferences]
+                print(tabulate(rows, headers=headers, tablefmt="grid"))
+            else:
+                print("No contact preferences found.")
         elif choice == "3":
             ContactPreference.update(
                 int(input("Preference ID: ")),
@@ -323,8 +351,13 @@ def event_sponsor_menu():
                 float(input("Amount Contributed: "))
             )
         elif choice == "2":
-            for sponsor in EventSponsor.read_all():
-                print(dict(sponsor))
+            sponsors = EventSponsor.read_all()
+            if sponsors:
+                headers = sponsors[0].keys()
+                rows = [tuple(s) for s in sponsors]
+                print(tabulate(rows, headers=headers, tablefmt="grid"))
+            else:
+                print("No sponsors found.")
         elif choice == "3":
             EventSponsor.update(
                 int(input("Sponsor ID: ")),
