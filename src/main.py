@@ -3,12 +3,11 @@ Main CLI interface for the SMH Charity Donation Tracker system.
 Allows admin users to manage donors, volunteers, events, and donations.
 Supports full CRUD operations and integrated search functionality.
 """
-# Removed redundant reimport of 'sys'
+import sys # Removed redundant reimport of 'sys'
 import time  # Required for time.sleep in slow_print
 import os
 import getpass
 from tabulate import tabulate
-import sys
 
 # Ensure the project root (one level above /src) is in the import path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -94,7 +93,6 @@ def main_menu():
             print("Invalid choice. Please try again.")
 
 # ----------- Submenus -----------
-
 def donor_menu():
     """Submenu for managing donor records."""
     while True:
@@ -339,7 +337,6 @@ def event_sponsor_menu():
             break
         else:
             print("Invalid choice.")
-
 
 def main():
     """Initialises the database and launches the application."""

@@ -1,6 +1,5 @@
 """
 Donation model for SMH Charity Donation Tracker.
-
 Provides CRUD operations and maintains relationships
 with donor, event, and volunteer records.
 """

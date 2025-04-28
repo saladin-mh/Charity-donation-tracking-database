@@ -1,13 +1,9 @@
--- SMH Charity Donation Tracker Database Schema
--- Author: [Salahdine Maamri EL Hazmiri]
--- Purpose: Structured relational schema for tracking charity donations
--- Compliance: Normalised to 3NF, with enforced relational integrity
-
+-- This SQL script creates the database schema for the SMH application.
 PRAGMA foreign_keys = ON;
 PRAGMA encoding = "UTF-8";
 PRAGMA journal_mode = "WAL";
--- Donors Table
 
+-- Donors Table
 CREATE TABLE IF NOT EXISTS donors (
     donor_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
@@ -19,7 +15,6 @@ CREATE TABLE IF NOT EXISTS donors (
 );
 
 -- Events Table
-
 CREATE TABLE IF NOT EXISTS events (
     event_id INTEGER PRIMARY KEY AUTOINCREMENT,
     event_name TEXT NOT NULL,
@@ -29,7 +24,6 @@ CREATE TABLE IF NOT EXISTS events (
 );
 
 -- Volunteers Table
-
 CREATE TABLE IF NOT EXISTS volunteers (
     volunteer_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
@@ -38,7 +32,6 @@ CREATE TABLE IF NOT EXISTS volunteers (
 );
 
 -- Donations Table
-
 CREATE TABLE IF NOT EXISTS donations (
     donation_id INTEGER PRIMARY KEY AUTOINCREMENT,
     amount REAL NOT NULL CHECK (amount > 0),
@@ -54,7 +47,6 @@ CREATE TABLE IF NOT EXISTS donations (
 );
 
 -- admin_users Table
-
 CREATE TABLE IF NOT EXISTS admin_users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
@@ -62,7 +54,6 @@ CREATE TABLE IF NOT EXISTS admin_users (
 );
 
 -- Donor Contact Preferences Table
-
 CREATE TABLE IF NOT EXISTS donor_contact_preferences (
     preference_id INTEGER PRIMARY KEY AUTOINCREMENT,
     donor_id INTEGER NOT NULL,
@@ -72,7 +63,6 @@ CREATE TABLE IF NOT EXISTS donor_contact_preferences (
 );
 
 -- Event Sponsors Table
-
 CREATE TABLE IF NOT EXISTS event_sponsors (
     sponsor_id INTEGER PRIMARY KEY AUTOINCREMENT,
     event_id INTEGER NOT NULL,
@@ -83,7 +73,6 @@ CREATE TABLE IF NOT EXISTS event_sponsors (
 );
 
 --Contact Preferences Table
-
 CREATE TABLE IF NOT EXISTS contact_preferences (
     preference_id INTEGER PRIMARY KEY AUTOINCREMENT,
     donor_id INTEGER NOT NULL,
@@ -92,8 +81,7 @@ CREATE TABLE IF NOT EXISTS contact_preferences (
     FOREIGN KEY (donor_id) REFERENCES donors(donor_id) ON DELETE CASCADE
 );
 
--- Event Sponsors Table
-
+-- Event Sponsors Table (Revised)
 CREATE TABLE IF NOT EXISTS event_sponsors (
     sponsor_id INTEGER PRIMARY KEY AUTOINCREMENT,
     event_id INTEGER NOT NULL,

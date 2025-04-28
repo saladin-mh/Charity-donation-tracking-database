@@ -11,7 +11,6 @@ Supports partial matches via SQL LIKE queries.
 
 from db.db_manager import get_connection
 
-
 def search_donations_by_donor_name(name_query):
     """
     Search for donations made by donors matching the given name.
@@ -32,7 +31,6 @@ def search_donations_by_donor_name(name_query):
         """, (f"%{name_query}%", f"%{name_query}%"))
         return cursor.fetchall()
 
-
 def search_donations_by_event_name(event_query):
     """
     Search for donations associated with a specific event name.
@@ -52,7 +50,6 @@ def search_donations_by_event_name(event_query):
             WHERE e.event_name LIKE ?
         """, (f"%{event_query}%",))
         return cursor.fetchall()
-
 
 def search_donations_by_volunteer_name(vol_query):
     """

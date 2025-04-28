@@ -42,3 +42,5 @@ def run_test():
 
 if __name__ == "__main__":
     run_test()
+    print("Test script executed directly.")
+    # This allows the script to be run directly for testing purposes.

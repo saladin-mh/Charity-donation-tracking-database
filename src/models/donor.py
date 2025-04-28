@@ -1,12 +1,10 @@
 """
 Donor model for the SMH Charity Donation Tracker.
-
 Handles CRUD operations for donors, using sqlite3 for database access.
 """
 
 import sqlite3
 from db.db_manager import get_connection
-
 
 class Donor:
     """Provides static methods for managing donor records in the database."""

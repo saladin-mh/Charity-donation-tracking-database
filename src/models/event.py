@@ -1,6 +1,5 @@
 """
 Event model for the SMH Charity Donation Tracker.
-
 Manages CRUD operations on event data using SQLite3.
 """
 
