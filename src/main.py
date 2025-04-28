@@ -26,7 +26,7 @@ from models.event_sponsor import EventSponsor
 
 ADMIN_PASSWORD = "1234"
 
-def slow_print(text, delay=0.03):
+def slow_print(text, delay=0.01):
     """Prints text slowly like a typewriter."""
     for char in text:
         sys.stdout.write(char)
