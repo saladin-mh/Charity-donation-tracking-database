@@ -91,7 +91,6 @@ def main_menu():
             slow_print("Exiting in 3 seconds...", 0.5)  # Added a delay before exit
             time.sleep(3)
             sys.exit(0)  # Exit the program cleanly
-            break
         else:
             print("Invalid choice. Please try again.")
 
@@ -137,8 +136,7 @@ def donor_menu():
                           house_number, phone_number)
         elif choice == "5":
             break
-        else:
-            print("Invalid choice.")
+        # Removed unreachable else block
 
 def volunteer_menu():
     """Submenu for managing volunteer records."""
